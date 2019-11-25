@@ -1,0 +1,220 @@
+---
+title: "Proyecto Final R"
+author: "Claudia Fanlo Añaños"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output:
+  rmdformats::readthedown:
+    self_contained: true
+    fig_caption: true
+    thumbnails: true
+    lightbox: true
+    gallery: true
+    highlight: espresso
+---  
+
+<style>
+h1,h2,h3,h4,h5,h6,legend{
+    font-family: Arial,Arial,Arial,sans-serif,sans-serif;
+    font-weight:700;
+    color: #c7254e;
+}
+</style>
+<div style="text-align: justify">  
+
+```{r, echo=FALSE, include=FALSE}
+library(rmdformats)
+library(rvest)
+library(lubridate)
+library(plotly)
+library(ggplot2)
+library(highcharter)
+library(knitr)
+```
+
+## Recursos sobre expresiones regulares  
+&nbsp;Las **expresiones regulares** usualmente se utilizan para buscar en un texto una serie de caracteres con la intención de sustituirlos o conocer el número que aparece en un texto cierta cadena.  
+
+
+&nbsp;Para comenzar el trabajo, voy a analizar dos páginas de expresiones regulares y determinaré, bajo mi punto de vita, cuál de ellas es más interesante:  
+
+[Expresiones regulares 1](https://www.arumeinformatica.es/blog/expresiones-regulares-conceptos-avanzados/)  
+Esta primera página es para usuarios avanzados. Incluyen más tecnicismos y muestra conceptos como:  
+
+* **Voracidad**: A la hora de usar cuantificadores, se debe tener encuenta que todos son 'voraces', es decir, la solución sería aplicarle al cuantificador un signo no voraz: ?  
+      + el cuantificador opcional "?" no voraz se escribiría "??"  
+      + al cuantifiador de repetición "+" no voraz se convierten en "+?"  
+ El ejemplo de la página resulta interesante /p.+a/i  
+ Si queremos que la expresión regular nos devuelva 'Pasa' en lugar de 'Pasacadena', deberíamos expresarla de esta forma: /p.+?a/i  
+ 
+ 
+* **Secuencia de escape**: Se utiliza el caracter de escape \\ para representar ciertos caracteres que no tienen representación gráfica directa. Voy a nombrar algunas de las que se muestran: 
+
+        + \t tabulador  
+        
+        + \n nueva línea  
+      
+        + \s representa un caracter de espacio en blanco, como el tabulador, el espacio etc  
+        
+        + \S cualquier caracter que no sea un espacio en blanco  
+      
+        + \d representa un caracter dígito  
+      
+        + \D representa un caracter que no sea dígito  
+
+* **Aserciones**: En esta página nos encontramos con aserciones más avanzadas como las aserciones 'mirar alrededor' (look-around), que se indicar con la forma (? ). Nos muestran dos tipos:  
+
+        + lookbehind : '(?<= )' o '(?<! )' dependiendo de si es una aserción positiva o una negativa
+        
+        + looahead : '(?= )' o '(?! )' también dependiendo de si es positiva o negativa  
+
+
+[Expresiones regulares 2](https://www.adictosaltrabajo.com/2015/01/29/regexsam/)  
+&nbsp;En esta segunda página se muestra los conceptos básicos para aquellos que están aprendiendo su uso o son principiantes con R. Me parece útil para entender lo que son y para qué sirven, ya que la página incluye *ejemplos* para su mejor visualización. A continuación voy a nombrar algunos de los detalles de la página que me resultan llamativas para entenderlas de manera básica:  
+
+* La **sintaxis** de los elementos básicos, donde se reflejan los diferentes signos para dar sentido a la expresión regular. Entre otros, los más utilizados son: 
+
+        + Los grupos y rangos : [A-Z], [a-z] donde se incluyen todas las letras mayúsculas o minúsculas  
+                                [0-8] para incluis dígitos del 0 al 8  
+                                [C|E] para que devuelva el C o el E, disyunción lógica    
+                                . cualquier caracter menos el salto de línea  
+                                
+        + Aserciones : ! se utiliza para negar algo  
+                       () para crear una condición  
+                       
+        + Enlaces o nexos : ^ señala que empieza una cadena o línea de múltiples patrones  
+                            $ señala que acaba una cadena o línea de múltiples patrones  
+                            \A principio de cadena siempre 
+                            \Z final de cadena siempre
+       
+* **Pruebas con ejemplos**: Esta página incluye diferentes enlaces para ver ejemplos, además de la opción de poder practicar ahí las expresiones. Uno de los ejemplos que más me llama la atención es uno que está relacionado con fechas:  
+
+        + [0-9]{2}[/-][0-9]{2}[/-]([0-9]{2}|[0-9]{4})  
+Nos devolverá fechas con dos dígitos para dia y mes, y dos o cuatro dígitos para el año. Además el caracter separador será o la barra o el guión. El problema, también señalado en la página, es que ningún mes tiene más de 31 días, y en nuestro caso saldría hasta 99 días. Nos deja una expresión regular más avanzada y a la vez nos recomienta que hay otra manera de solucionar el  problema sin utilizar expresiones regulares.  
+        
+
+&nbsp;Bajo mi punto de vista y a modo de **conclusión**, esta última página es un tanto más completa, ya que cuenta con muchas más aserciones o enlaces de los que he nombrado. Por otro lado, es mucho más explicativa, dado que cuenta con más ejemplos que en la primera página que, a su vez, casi se limita solo a explicar la teoría.  
+
+___
+
+## Recursos sobre Markdown  
+&nbsp;En este segundo apartado voy a citar dos páginas sobre el uso de Markdown, señalando, a mi juicio, algunas de sus *ventajas y desventajas*.  
+
+[Markdown 1]('https://markdown.es/sintaxis-markdown/')  
+
+|          **Ventajas**           |       **Desventajas**           |     
+|---------------------------------|---------------------------------|
+| + Elementos básicos para la creación del documento| + Quizás demasiado simple | 
+| + Clara sintaxis                                  | + No aclara cómo crear tablas|
+| + Uso de buenos ejemplos |                          + Se centra solo en la sintaxis|
+| + Te señala el código utilizado y el resultaod de este|   
+|  
+
+[Markdown 2]('https://rmarkdown.rstudio.com/lesson-7.html')  
+
+|     **Ventajas**  |                          **Desventajas**               |
+|-------------------|--------------------------------------------------------|
+|+ Muy clara y dividida en secciones        | + Específica para el programa R|
+|+ Enseña como crear tablas|                                                 |
+|+ Elementos interactivos y presentaciones|                                  |
+|+ Te indica el cógido usado y como ocultarlo|                               |
+|                                                              
+
+&nbsp;A pesar de que este último es específico para R, la página me resulta mucho más útil a la hora de poder crear gráficos, tablas etc. ya que la primera te mostraba solo la sintáxsis de Markdown. Esta segunda página va un nivel más allá y te enseña cómo dejar bonito un documento con efectos visuales.  
+
+___
+
+
+## Análisis de los últimos datos de cotización en bolsa de Inditex y el Ibex
+
+&nbsp;En este apartado se va a analizar brevemete la cotización en bolsa de Inditex en el periodo de 20-11-2018 y 18-11-2019, con la ayuda de un gráfico. A su vez, me ha parecido interesante recoger datos de las últimas cotizaciones en bolsa de todo el Ibex, y hacer una breve comparativa y estudio de la empresa Inditex dentro de este índice.
+
+### Descripción de los datos 
+&nbsp;La primera tabla escogida cuenta con 7 variables -Fecha, valor (precio) de apertura, valor de cierre, el porcentaje de diferencia entre el valor de apertura y cierre, el valor máximo durante la sesión, el valor mínimo y el volumen total, que se entiende por la cantidad de títulos negociados de una acción en un periodo determinado. Además, he creado una columna adicional agrupando los valores por meses, para su mejor estudio a la hora de crear el gráfico. La tabla del Ibex refleja, para cada empresa que cotiza dentro del índice, el precio de la acción, porcentajes de variación de este, el volumen, el valor máximo y el mínimo y la rentabilidad por dividendo de cada acción.
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+#Table Inditex
+url.inditex <- "http://www.finanzas.com/cotizaciones/inditex/datos-historicos.html"
+tmp <- read_html(url.inditex)
+tmp <- html_nodes(tmp, "table")  
+length(tmp)
+sapply(tmp, class)  
+sapply(tmp, function(x) dim(html_table(x, fill = TRUE)))
+inditex <- html_table(tmp[[1]])
+summary(inditex)
+colnames(inditex) <- c('Fecha', 'Apertura', 'Cierre', 'Porcentaje_diferencia', 'Maximo', 'Minimo', 'Volumen')
+
+inditex$Apertura <- as.numeric(gsub(',', '.', inditex$Apertura))
+inditex$Cierre <- as.numeric(gsub(',', '.', inditex$Cierre))
+inditex$Porcentaje_diferencia <- as.numeric(gsub(',', '.', inditex$Porcentaje_diferencia))
+inditex$Maximo <- as.numeric(gsub(',', '.', inditex$Maximo))
+inditex$Minimo <- as.numeric(gsub(',', '.', inditex$Minimo))
+inditex$Volumen <- as.numeric(gsub('[.]', '', inditex$Volumen))
+inditex$Fecha = dmy(inditex$Fecha)
+inditex$Month <- month(inditex$Fecha)
+colnames(inditex) <- c('Fecha', 'Apertura', 'Cierre', 'Porcentaje_diferencia', 'Maximo', 'Minimo', 'Volumen', 'Mes')
+
+MESES = c("01 Enero","02 Febrero","03 Marzo","04 Abril","05 Mayo","06 Junio","07 Julio","08 Agosto","09 Septiembre","10 Octubre","11 Noviembre","12 Diciembre")
+inditex$Mes=MESES[as.numeric(inditex$Mes)]
+
+#Tabla IBEX
+url.ibex <- "http://www.finanzas.com/ibex-35/"
+res <- read_html(url.ibex)
+res <- html_nodes(res, "table")  
+length(res)
+sapply(res, class)  
+sapply(res, function(x) dim(html_table(x, fill = TRUE)))
+ibex <- html_table(res[[8]])
+summary(ibex)
+colnames(ibex) <- c('Valor', 'Precio', 'Variacion', 'Porcentaje_valor', 'Volumen', 'Maximo', 'Minimo', 'Rentabilidad_dividendo', 'Hora')
+ibex$Precio <- as.numeric(gsub(',', '.', ibex$Precio))
+ibex$Variacion <- as.numeric(gsub(',', '.', ibex$Variacion))
+ibex$Porcentaje_valor <- as.numeric(gsub(',', '.', ibex$Porcentaje_valor))
+ibex$Maximo <- as.numeric(gsub(',', '.', ibex$Maximo))
+ibex$Minimo <- as.numeric(gsub(',', '.', ibex$Minimo))
+ibex$Volumen <- as.numeric(gsub('[.]', '', ibex$Volumen))
+ibex$Rentabilidad_dividendo <- as.numeric(gsub(',', '.', ibex$Rentabilidad_dividendo))
+ibex$Hora <- NULL
+```
+
+### Gráficos de las cotizaciones
+
+
+```{r, echo=FALSE}
+ggplotly(ggplot(inditex, aes(x = Mes, y = Cierre, color = Volumen, label = Fecha)) + 
+  geom_point(size=1) + ggtitle('Cotización Inditex') + theme(axis.text.x =                   element_text(angle = 90, hjust = 1)))
+```
+
+&nbsp;Para representar este primer gráfico, he escogido las variables **Mes**, **Volumen** y **Cierre**, y se va a tratar de mostrar el volumen de cotización de Inditex, separado por meses. He visto importante reflejar el volumen, porque nos indica el interés de los inversores en invertir en Inditex. A su vez, queda relejado el máximo valor cotizado en cada día del mes. Como vemos en el gráfico, el volumen de cotización de las acciones de Inditex es muy grande, ya que es una empresa de gran capitalización. Por otro lado, se puede observar que el precio varía en cada mes del año, con valores que van desde el 21,41€ el 3 de enero de 2019 hasta precios que cierran en 28,48€. 
+Además, en la etiqueta dinámica que muestra la fecha exacta, valor y volumen, se aprecia cómo en el mes de diciembre (que es el único mes que consideramos en el 2018 junto con algunos días de noviembre), los precios de cierre van decreciendo día tras día. Esto es debido a la drástica caída de las bolsas mundiales durante todo 2018, donde la mayoría de ellas acabaron el año con los peores resultados desde 2011.  
+
+
+
+
+
+```{r, echo=FALSE, warning=FALSE}
+hchart(ibex, "scatter", hcaes(x = Precio, y = Rentabilidad_dividendo, group = Valor)) %>%
+  hc_title(text = "Ibex") %>%
+  hc_add_theme(hc_theme_economist())
+```  
+
+
+&nbsp;En este segundo gráfico he decidido representar los último **precios** en bolsa de todas las empresas que cotizan en el Ibex y la **rentabilidad por dividendo** que aportan, para poder ubicar mejor a Inditex dentro de la bolsa española y compararla con las demás compañías que la integran. No había datos de la rentabilidad por dividendo de Masmovil e Indra A, por lo que no los he podido representa en el gráfico, pero la comparación va a ser general para dar una breve visión de como está Inditex respecto a los demás.      
+Como se puede observar, en estos momentos Inditex deja una rentabilidad del 3,19% y el precio por acción es de 27,47€. Comparada con las demás empresas que cotizan en el Ibex, Inditex no es una de las que más rentabilidad por dividendo proporciona, pero es la octava con el precio por acción más alto.  
+&nbsp;A primera vista, se podría decir que Inditex está dentro del comportamiento normal que sigue todo el índice, ya que no se separa mucho de la media como otras empresas como ACS y IAG, cuyas rentabilidades son muy altas, o AENA y Acciona, con precios por acción más elevados que los de la media.  
+
+
+  
+### Tabla comparativa del Ibex
+
+```{r inditex, echo=FALSE, results='asis'}
+ibex_reducida <- ibex
+ibex_reducida$Porcentaje_valor <- NULL
+ibex_reducida$Variacion <- NULL
+tabla <- arrange(ibex_reducida, -Precio)
+kable(head(tabla,10), align = c('l', 'c', 'c', 'c', 'c', 'c'),
+      col.names = c("Empresa","Precio","Volumen","Máximo","Mínimo","Rentabilidad por             dividendo"), format.args = list( decimal.mark = ","))
+```
+
+&nbsp;En esta tabla se pueden ver las 10 empresas de Ibex que a mayor precio cotizan. Como he dicho anteriormente, Inditex es la octaba compañía en el índice con mayor precio. El precio de la acción sube porque muchos inversores compran esa acción pensando que en un futuro seguirá subiendo, estará más cara y podrá sacar beneficio al venderla. Por lo tanto, se están anticipando a las fluctuaciones para tomar las decisiones que más les beneficien.  
+Sin embargo, que el precio sea alto no significa que la rentabilidad por dividendo de la empresa sea alto. Por ejemplo, en la tabla vemos que Amadeus tiene un precio más elevado que Inditex, pero tiene menor rentabilidad por dividendo. Esta ratio se calcula dividiendo los dividendos anuales que tiene la empresa entre el precio de la acción. Por otro lado, y bajo mi punto de vista, no siempre hay que invertir en las empresas que tengan mayor rentabilidad por dividendo, ya que los beneficios que se obtienen al invertir en acciones no se basan solo en los dividendos, si no también en el aumento del valor del precio de la compañía en el mercado. Es más, una empresa que paga los mayores dividendos, no reinvierte sus ganancias en crecimiento y expansión.  
