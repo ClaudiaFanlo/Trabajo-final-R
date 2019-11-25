@@ -181,6 +181,7 @@ ibex$Hora <- NULL
 
 
 ```{r, echo=FALSE}
+library(plotly)
 ggplotly(ggplot(inditex, aes(x = Mes, y = Cierre, color = Volumen, label = Fecha)) + 
   geom_point(size=1) + ggtitle('Cotización Inditex') + theme(axis.text.x =                   element_text(angle = 90, hjust = 1)))
 ```
@@ -217,4 +218,6 @@ kable(head(tabla,10), align = c('l', 'c', 'c', 'c', 'c', 'c'),
 ```
 
 &nbsp;En esta tabla se pueden ver las 10 empresas de Ibex que a mayor precio cotizan. Como he dicho anteriormente, Inditex es la octaba compañía en el índice con mayor precio. El precio de la acción sube porque muchos inversores compran esa acción pensando que en un futuro seguirá subiendo, estará más cara y podrá sacar beneficio al venderla. Por lo tanto, se están anticipando a las fluctuaciones para tomar las decisiones que más les beneficien.  
-Sin embargo, que el precio sea alto no significa que la rentabilidad por dividendo de la empresa sea alto. Por ejemplo, en la tabla vemos que Amadeus tiene un precio más elevado que Inditex, pero tiene menor rentabilidad por dividendo. Esta ratio se calcula dividiendo los dividendos anuales que tiene la empresa entre el precio de la acción. Por otro lado, y bajo mi punto de vista, no siempre hay que invertir en las empresas que tengan mayor rentabilidad por dividendo, ya que los beneficios que se obtienen al invertir en acciones no se basan solo en los dividendos, si no también en el aumento del valor del precio de la compañía en el mercado. Es más, una empresa que paga los mayores dividendos, no reinvierte sus ganancias en crecimiento y expansión.  
+Sin embargo, que el precio sea alto no significa que la rentabilidad por dividendo de la empresa sea alto. Por ejemplo, en la tabla vemos que Amadeus tiene un precio más elevado que Inditex, pero tiene menor rentabilidad por dividendo. Esta ratio se calcula dividiendo los dividendos anuales que tiene la empresa entre el precio de la acción.  
+
+&nbsp;Como **conclusión**, bajo mi punto de vista, no siempre hay que invertir en las empresas que tengan mayor rentabilidad por dividendo, ya que los beneficios que se obtienen al invertir en acciones no se basan solo en los dividendos, si no también en el aumento del valor del precio de la compañía en el mercado. Es más, una empresa que paga los mayores dividendos, no reinvierte sus ganancias en crecimiento y expansión.  
